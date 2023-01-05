@@ -20,10 +20,9 @@ public class userController {
     @FXML
     private void send(ActionEvent e) throws IOException {
         getUser().sendMessage(getUserQuestion().getText());
-//        getServerAnswer().setText(getUser().receiveMessage());
 
         try {
-            System.out.println("user says: " + getUser().receiveMessage());
+            //todo receive message here
         }
         catch (Exception exception){
             System.out.println("ERROR: " + exception.getMessage() + " "+ exception.getCause());

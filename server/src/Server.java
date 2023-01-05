@@ -1,6 +1,7 @@
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class Server{
     private int port;
@@ -39,7 +40,7 @@ public class Server{
 
     public void sendMessage(String message) throws IOException {
         OutputStream toUser = getServer().getOutputStream();
-        PrintWriter sender = new PrintWriter(toUser);
+        PrintWriter sender = new PrintWriter(toUser, true);
         sender.println(message);
     }
 
@@ -47,8 +48,15 @@ public class Server{
 
         String message;
         InputStream fromUser = getServer().getInputStream();
-        DataInputStream receiver = new DataInputStream(fromUser);
-        message = receiver.readLine();
+        Scanner scanner = new Scanner(new DataInputStream(fromUser));
+//        if(scanner.hasNext()){
+//            message = scanner.next();
+//        }
+//        else{
+//            message = "NULL";
+//        }
+        message = scanner.next();
+        System.out.println(message);
         return message;
     }
 

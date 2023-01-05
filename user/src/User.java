@@ -1,5 +1,7 @@
 import java.io.*;
 import java.net.Socket;
+import java.util.Scanner;
+
 public class User {
     private int port;
     private String serverAddress;
@@ -42,17 +44,25 @@ public class User {
 
     public void sendMessage(String message) throws IOException {
 
-        OutputStream outputToServer = getUser().getOutputStream();
-        PrintWriter sender = new PrintWriter(outputToServer);
+        OutputStream toServer = getUser().getOutputStream();
+        PrintWriter sender = new PrintWriter(toServer, true);
         sender.println(message);
+        System.out.println(message);
     }
 
     public String receiveMessage() throws IOException {
 
         String message;
-        InputStream inputFromServer = getUser().getInputStream();
-        DataInputStream receiver = new DataInputStream(inputFromServer);
-        message = receiver.readLine();
+        InputStream fromServer = getUser().getInputStream();
+        Scanner scanner = new Scanner(new DataInputStream(fromServer));
+//        if(scanner.hasNext()){
+//            message = scanner.next();
+//        }
+//        else {
+//            message = "NULL";
+//        }
+        message = scanner.next();
+        System.out.println(message);
 
         return message;
     }

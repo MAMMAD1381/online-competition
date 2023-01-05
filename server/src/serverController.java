@@ -17,9 +17,8 @@ public class serverController {
     }
     public void send(ActionEvent event) throws IOException {
         getServer().sendMessage(toUser.getText());
-//        fromUser.setText(getServer().receiveMessage());
         try {
-            System.out.println("user says: " + getServer().receiveMessage());
+            //todo receive message here
         }
         catch (Exception exception){
             System.out.println("ERROR: " + exception.getMessage() +" "+exception.getCause());
