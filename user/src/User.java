@@ -38,4 +38,8 @@ public class User {
     private void setUser(Socket user) {
         this.user = user;
     }
+
+    public void sendMessage(){
+
+    }
 }
