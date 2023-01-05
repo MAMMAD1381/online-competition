@@ -12,8 +12,6 @@ public class main extends Application{
 
     @Override
     public void start(Stage stage) throws Exception {
-        int port = 9090;
-        new Server(port);
 
         Parent parent = FXMLLoader.load(getClass().getResource("server.fxml"));
         Scene scene = new Scene(parent);

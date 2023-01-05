@@ -2,23 +2,32 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
+import java.io.IOException;
+
 public class userController {
     @FXML
     private TextField serverAnswer;
     @FXML
     private TextField userQuestion;
     private User user;
+    private int port = 9090;
+    private String serverAddress = "127.0.0.1";
 
 
     public userController(){
-        int port = 9090;
-        String serverAddress = "127.0.0.1";
-//        setUser(new User(port,serverAddress));
+        setUser(new User(port,serverAddress));
     }
     @FXML
-    private void send(ActionEvent e){
-        String message = getUserQuestion().getText();
-        getServerAnswer().setText(message);
+    private void send(ActionEvent e) throws IOException {
+        getUser().sendMessage(getUserQuestion().getText());
+//        getServerAnswer().setText(getUser().receiveMessage());
+
+        try {
+            System.out.println("user says: " + getUser().receiveMessage());
+        }
+        catch (Exception exception){
+            System.out.println("ERROR: " + exception.getMessage() + " "+ exception.getCause());
+        }
     }
 
     private User getUser() {

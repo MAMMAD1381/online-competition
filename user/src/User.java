@@ -1,3 +1,4 @@
+import java.io.*;
 import java.net.Socket;
 public class User {
     private int port;
@@ -39,7 +40,20 @@ public class User {
         this.user = user;
     }
 
-    public void sendMessage(){
+    public void sendMessage(String message) throws IOException {
 
+        OutputStream outputToServer = getUser().getOutputStream();
+        PrintWriter sender = new PrintWriter(outputToServer);
+        sender.println(message);
+    }
+
+    public String receiveMessage() throws IOException {
+
+        String message;
+        InputStream inputFromServer = getUser().getInputStream();
+        DataInputStream receiver = new DataInputStream(inputFromServer);
+        message = receiver.readLine();
+
+        return message;
     }
 }
