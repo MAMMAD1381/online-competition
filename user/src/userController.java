@@ -6,9 +6,9 @@ import java.io.IOException;
 
 public class userController {
     @FXML
-    private TextField serverAnswer;
+    private TextField fromServer;
     @FXML
-    private TextField userQuestion;
+    private TextField toServer;
     private User user;
     private int port = 9090;
     private String serverAddress = "127.0.0.1";
@@ -19,10 +19,10 @@ public class userController {
     }
     @FXML
     private void send(ActionEvent e) throws IOException {
-        getUser().sendMessage(getUserQuestion().getText());
+        getUser().sendMessage(getToServer().getText());
 
         try {
-            //todo receive message here
+            fromServer.setText(getUser().receiveMessage().toString());
         }
         catch (Exception exception){
             System.out.println("ERROR: " + exception.getMessage() + " "+ exception.getCause());
@@ -37,19 +37,19 @@ public class userController {
         this.user = user;
     }
 
-    private TextField getServerAnswer() {
-        return serverAnswer;
+    private TextField getFromServer() {
+        return fromServer;
     }
 
-    private void setServerAnswer(TextField serverAnswer) {
-        this.serverAnswer = serverAnswer;
+    private void setFromServer(TextField fromServer) {
+        this.fromServer = fromServer;
     }
 
-    private TextField getUserQuestion() {
-        return userQuestion;
+    private TextField getToServer() {
+        return toServer;
     }
 
-    private void setUserQuestion(TextField userQuestion) {
-        this.userQuestion = userQuestion;
+    private void setToServer(TextField toServer) {
+        this.toServer = toServer;
     }
 }
