@@ -15,7 +15,7 @@ public class main extends Application{
     @Override
     public void start(Stage stage) throws Exception {
 
-        Parent parent = FXMLLoader.load(getClass().getResource("../uiAndControllers/fxmls/mainMenu.fxml"));
+        Parent parent = FXMLLoader.load(getClass().getResource("../UIAndControllers/fxmls/mainMenu.fxml"));
         Scene scene = new Scene(parent);
         stage.setScene(scene);
         stage.setResizable(false);

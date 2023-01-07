@@ -1,16 +1,14 @@
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.TextField;
+package UIAndControllers.Controllers;
 
-import java.io.IOException;
+import main.User;
 
-public class userController {
+public class mainMenuController {
     private User user;
     private int port = 9090;
     private String serverAddress = "127.0.0.1";
 
 
-    public userController(){
+    public mainMenuController(){
         setUser(new User(port,serverAddress));
     }
 
