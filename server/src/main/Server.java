@@ -1,3 +1,5 @@
+package main;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -17,9 +19,7 @@ public class Server{
             System.out.println(e.getMessage() + " " + e.getCause());
         }
 
-//        while (true){
-            ready();
-//        }
+//            ready();
     }
 
     private int getPort() {
@@ -49,12 +49,6 @@ public class Server{
         String message;
         InputStream fromUser = getServer().getInputStream();
         Scanner scanner = new Scanner(new DataInputStream(fromUser));
-//        if(scanner.hasNext()){
-//            message = scanner.next();
-//        }
-//        else{
-//            message = "NULL";
-//        }
         message = scanner.next();
         System.out.println(message);
         return message;
