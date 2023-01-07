@@ -19,6 +19,7 @@ public class Server{
             System.out.println(e.getMessage() + " " + e.getCause());
         }
 
+
 //            ready();
     }
 
@@ -65,4 +66,9 @@ public class Server{
     private void ready() throws IOException {
         setServer(getServerSocket().accept());
     }
+
+    public void close() throws IOException {
+        getServerSocket().close();
+    }
+
 }
