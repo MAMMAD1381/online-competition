@@ -9,18 +9,20 @@ public class Server{
     private int port;
     private ServerSocket serverSocket;
     private Socket server;
+    private int numberOfUsers;
 
     public Server(int port) throws IOException {
         setPort(port);
         try {
             setServerSocket(new ServerSocket(getPort()));
         }
-        catch (Exception e){
+        catch (Exception e) {
             System.out.println(e.getMessage() + " " + e.getCause());
         }
+        while (true){
+            ready();
+        }
 
-
-//            ready();
     }
 
     private int getPort() {
@@ -65,6 +67,7 @@ public class Server{
 
     private void ready() throws IOException {
         setServer(getServerSocket().accept());
+        numberOfUsers++;
     }
 
     public void close() throws IOException {
