@@ -9,7 +9,7 @@ public class mainMenuController {
 
 
     public mainMenuController(){
-        setUser(new User(port,serverAddress));
+
     }
 
     private User getUser() {
