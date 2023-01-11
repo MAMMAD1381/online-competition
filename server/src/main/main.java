@@ -6,20 +6,20 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class main extends Application{
-    public static void main(String[] args) {
+import java.io.IOException;
 
-        Application.launch();
+public class main {
+    private int port = 9090;
+    public static void main(String[] args) throws IOException {
+
+        Thread gui=new Thread(new ServerGUI());
+        gui.start();
+        Thread server=new Thread(new Server(9090));
+        server.start();
+
     }
 
-    @Override
-    public void start(Stage stage) throws Exception {
 
-        Parent parent = FXMLLoader.load(getClass().getResource("../UIAndControllers/Fxmls/mainMenu.fxml"));
-        Scene scene = new Scene(parent);
-        stage.setScene(scene);
-        stage.setResizable(false);
 
-        stage.show();
-    }
 }
+

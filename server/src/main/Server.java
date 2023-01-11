@@ -5,11 +5,11 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class Server{
+public class Server implements Runnable{
     private int port;
     private ServerSocket serverSocket;
     private Socket server;
-    private int numberOfUsers;
+    public static int numberOfUsers=4;
 
     public Server(int port) throws IOException {
         setPort(port);
@@ -19,9 +19,11 @@ public class Server{
         catch (Exception e) {
             System.out.println(e.getMessage() + " " + e.getCause());
         }
-//        while (true){
+        while (true){
             ready();
-//        }
+            Thread t=new Thread(new ClientHandler(server));
+            t.start();
+        }
 
     }
 
@@ -66,6 +68,7 @@ public class Server{
     }
 
     private void ready() throws IOException {
+
         setServer(getServerSocket().accept());
         numberOfUsers++;
     }
@@ -74,4 +77,8 @@ public class Server{
         getServerSocket().close();
     }
 
+    @Override
+    public void run() {
+        System.out.println("yes");
+    }
 }

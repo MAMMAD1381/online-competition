@@ -6,12 +6,10 @@ import org.json.simple.*;
 import org.json.simple.parser.*;
 
 public class Quiz {
-    public static void main(String[] args)
-    {
-        //JSON parser object to parse read file
+    public static void getQuestion(ArrayList<Question> list){
         JSONParser jsonParser = new JSONParser();
 
-        try (FileReader reader = new FileReader("resources/questions.json"))
+        try (FileReader reader = new FileReader("src/Resources/questions.json"))
         {
             //Read JSON file
             Object obj = jsonParser.parse(reader);
@@ -19,7 +17,7 @@ public class Quiz {
             JSONArray questionList = (JSONArray) obj;
 
             //Iterate over employee array
-            questionList.forEach( emp -> parseQuestionObject( (JSONObject) emp ) );
+            questionList.forEach( emp -> parseQuestionObject( list, (JSONObject) emp ) );
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -29,19 +27,40 @@ public class Quiz {
             e.printStackTrace();
         }
     }
-
-    private static void parseQuestionObject(JSONObject questionObject)
+    public static void main(String[] args)
     {
-        String question = (String) questionObject.get("question");
-        System.out.println(question);
-        JSONArray options=(JSONArray) questionObject.get("options");
-        String op1= (String) options.get(0);
-        String op2= (String) options.get(1);
-        String op3= (String) options.get(2);
-        String op4= (String) options.get(3);
-        System.out.println(""+op1 +"  "+op2 +"  "+ op3 +"  "+op4);
-        String answer = String.valueOf(questionObject.get("answer"));
-        System.out.println(answer);
+        //JSON parser object to parse read file
+        ArrayList<Question> list=new ArrayList<>();
+        getQuestion(list);
+        for (int i=0;i< list.size();i++){
+            //System.out.println(list.get(i).answer);
+        }
+    }
 
+    private static void parseQuestionObject(ArrayList<Question> list,JSONObject questionObject)
+    {
+        String[] option=new String[4];
+        String question = (String) questionObject.get("question");
+        JSONArray options=(JSONArray) questionObject.get("options");
+        option[0]= (String) options.get(0);
+        option[1]= (String) options.get(1);
+        option[2]= (String) options.get(2);
+        option[3]= (String) options.get(3);
+        long answer = (long) questionObject.get("answer");
+        list.add(new Question(question,option,answer));
+
+
+    }
+}
+class Question{
+    String question;
+    String[] options=new String[4];
+    long answer;
+
+    public Question(String question, String[] options, long answer) {
+        this.question = question;
+        for(int i=0;i<4;i++)
+            this.options[i]=options[i];
+        this.answer = answer;
     }
 }

@@ -1,18 +1,16 @@
 package UIAndControllers.Controllers;
 
-import UIAndControllers.SceneController;
+import main.SceneController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import main.User;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class mainMenuController implements Initializable {
@@ -26,6 +24,8 @@ public class mainMenuController implements Initializable {
     AnchorPane anchorPane;
 
     public mainMenuController() throws IOException {
+        setUser(new User(port,serverAddress));
+        System.out.println("start");
         checkSevers();
 //        anchorPane.getChildren().add(serverList);
     }
@@ -36,6 +36,7 @@ public class mainMenuController implements Initializable {
 
     @FXML
     public void btnStart(ActionEvent e) throws IOException {
+
         SceneController.switchScene(FXMLLoader.load(getClass().getResource("../Fxmls/test.fxml")));
     }
 

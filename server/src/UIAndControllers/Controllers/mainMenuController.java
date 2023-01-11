@@ -15,15 +15,17 @@ public class mainMenuController {
 
     private Server server;
     private int port = 9090;
-    public mainMenuController() throws IOException {
 
+
+    public mainMenuController() throws IOException {
+//        server = new Server(port);
     }
 
     private Server getServer() {
         return server;
     }
 
-    private void setServer(Server server) {
+    public void setServer(Server server) {
         this.server = server;
     }
 
@@ -38,24 +40,10 @@ public class mainMenuController {
     }
 
     @FXML
-    private void btnOn(ActionEvent e) throws IOException {
-        if(isServerOn) {
-            getServer().close();
-            isServerOn = false;
-            btnOn.setStyle("-fx-background-color: lightgreen");
-            btnOn.setText("ON");
-        }
-        else {
-            setServer( new Server(port));
-            isServerOn = true;
-            btnOn.setStyle("-fx-background-color: red");
-            btnOn.setText("OFF");
-        }
-    }
-
-    @FXML
     private void btnStart(ActionEvent e){
-
+        if(Server.numberOfUsers > 3){
+//            new SceneC
+        }
     }
 
     @FXML
@@ -65,3 +53,4 @@ public class mainMenuController {
 
 
 }
+
