@@ -1,14 +1,17 @@
 package UIAndControllers;
 
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class SceneController {
     private static Stage stage;
-    public SceneController(Stage stage) {
+    public SceneController(Stage stage) throws IOException {
         this.stage = stage;
-        switchScene(new MainMenu());
+        switchScene(FXMLLoader.load(getClass().getResource("/UIAndControllers/Fxmls/mainMenu.fxml")));
         stage.show();
     }
 

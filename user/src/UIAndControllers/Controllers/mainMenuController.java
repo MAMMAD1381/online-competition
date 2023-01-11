@@ -1,5 +1,7 @@
 package UIAndControllers.Controllers;
 
+import UIAndControllers.SceneController;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -23,7 +25,6 @@ public class mainMenuController implements Initializable {
     @FXML
     AnchorPane anchorPane;
 
-
     public mainMenuController() throws IOException {
         checkSevers();
 //        anchorPane.getChildren().add(serverList);
@@ -33,6 +34,10 @@ public class mainMenuController implements Initializable {
 
     }
 
+    @FXML
+    public void btnStart(ActionEvent e) throws IOException {
+        SceneController.switchScene(FXMLLoader.load(getClass().getResource("../Fxmls/test.fxml")));
+    }
 
     private User getUser() {
         return user;

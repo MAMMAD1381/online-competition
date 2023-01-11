@@ -6,7 +6,7 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UIAndControllers.Controllers.mainMenuController">
+<AnchorPane fx:id="anchorPane" prefHeight="394.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UIAndControllers.Controllers.mainMenuController">
    <children>
       <SplitPane dividerPositions="0.7005532503457813" layoutX="194.0" layoutY="114.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
         <items>
@@ -16,13 +16,13 @@
                     <items>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                            <children>
-                              <Label layoutX="61.0" layoutY="14.0" text="friends" />
+                              <Label layoutX="70.0" layoutY="14.0" text="friends" />
                               <ListView editable="true" layoutX="-25.0" layoutY="84.0" prefHeight="273.0" prefWidth="170.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="40.0" />
                            </children>
                         </AnchorPane>
                       <AnchorPane fx:id="anchorPane" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                            <children>
-                              <Label layoutX="104.0" layoutY="14.0" text="servers" />
+                              <Label layoutX="120.0" layoutY="14.0" text="servers" />
                               <ListView fx:id="serverList" editable="true" layoutX="37.0" layoutY="69.0" prefHeight="273.0" prefWidth="170.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="40.0" />
                            </children>
                         </AnchorPane>
@@ -32,9 +32,9 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <Label layoutX="74.0" layoutY="20.0" text="user" />
+                  <Label layoutX="89.0" layoutY="23.0" text="user" />
                   <ListView editable="true" layoutX="6.0" layoutY="62.0" prefHeight="214.0" prefWidth="160.0" AnchorPane.bottomAnchor="117.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" />
-                  <Button layoutX="54.0" layoutY="310.0" mnemonicParsing="false" text="start test" />
+                  <Button layoutX="69.0" layoutY="309.0" mnemonicParsing="false" onAction="#btnStart" text="start test" />
                </children>
             </AnchorPane>
         </items>
