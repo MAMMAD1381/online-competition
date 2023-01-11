@@ -17,7 +17,11 @@ public class main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        new SceneController(stage);
+        Parent parent = FXMLLoader.load(getClass().getResource("/UIAndControllers/Fxmls/mainMenu.fxml"));
+        Scene scene = new Scene(parent);
+        stage.setScene(scene);
+        stage.show();
+//        new SceneController(stage);
 
     }
 }

@@ -19,9 +19,9 @@ public class Server{
         catch (Exception e) {
             System.out.println(e.getMessage() + " " + e.getCause());
         }
-        while (true){
+//        while (true){
             ready();
-        }
+//        }
 
     }
 
