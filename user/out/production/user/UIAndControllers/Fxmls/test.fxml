@@ -8,14 +8,14 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="394.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="394.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UIAndControllers.Controllers.testController">
    <children>
       <SplitPane dividerPositions="0.19608879492600426" layoutX="212.0" layoutY="110.0" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <items>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
-                  <Label layoutX="548.0" layoutY="28.0" text="question number" />
-                  <Label layoutX="266.0" layoutY="27.0" text="question" />
+                  <Label fx:id="questionNumber" layoutX="548.0" layoutY="28.0" text="question number" />
+                  <Label fx:id="question" layoutX="266.0" layoutY="27.0" text="question" />
                </children>
             </AnchorPane>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
@@ -29,7 +29,7 @@
                                  <items>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="66.0" prefWidth="108.0">
                                        <children>
-                                          <RadioButton alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="233.0" layoutY="18.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="309.0" text="RadioButton" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="18.0" />
+                                          <RadioButton fx:id="option1" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="233.0" layoutY="18.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="309.0" text="RadioButton" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="18.0" />
                                        </children>
                                     </AnchorPane>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="66.0" prefWidth="135.0">
@@ -47,7 +47,7 @@
                                  <items>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                        <children>
-                                          <RadioButton alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="5.0" layoutY="17.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="309.0" text="RadioButton" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+                                          <RadioButton fx:id="option2" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="5.0" layoutY="17.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="309.0" text="RadioButton" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" />
                                        </children>
                                     </AnchorPane>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="63.0" prefWidth="402.0">
@@ -65,7 +65,7 @@
                                  <items>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                        <children>
-                                          <RadioButton alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="5.0" layoutY="17.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="309.0" text="RadioButton" textAlignment="RIGHT" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+                                          <RadioButton fx:id="option3" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="5.0" layoutY="17.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="309.0" text="RadioButton" textAlignment="RIGHT" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" />
                                        </children>
                                     </AnchorPane>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
@@ -83,7 +83,7 @@
                                  <items>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                        <children>
-                                          <RadioButton alignment="CENTER_RIGHT" layoutX="5.0" layoutY="17.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="540.0" text="RadioButton" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+                                          <RadioButton fx:id="option4" alignment="CENTER_RIGHT" layoutX="5.0" layoutY="17.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="540.0" text="RadioButton" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" />
                                        </children>
                                     </AnchorPane>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">

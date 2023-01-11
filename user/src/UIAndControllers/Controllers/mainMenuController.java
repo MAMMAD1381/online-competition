@@ -14,17 +14,19 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class mainMenuController implements Initializable {
-    private User user;
+    public static User user;
     private int port = 9090;
     private String serverAddress = "127.0.0.1";
-    private String[] data = {"dsdsds","amir kooni","kir khar"};
+    private String[] data = {"dsdsds","amir ","mmd"};
     @FXML
     ListView<String> serverList ;
     @FXML
     AnchorPane anchorPane;
 
     public mainMenuController() throws IOException {
-        setUser(new User(port,serverAddress));
+        user = new User(port,serverAddress);
+        Thread client=new Thread(user);
+        client.start();
         System.out.println("start");
         checkSevers();
 //        anchorPane.getChildren().add(serverList);
@@ -36,20 +38,10 @@ public class mainMenuController implements Initializable {
 
     @FXML
     public void btnStart(ActionEvent e) throws IOException {
-
         SceneController.switchScene(FXMLLoader.load(getClass().getResource("../Fxmls/test.fxml")));
-    }
-
-    private User getUser() {
-        return user;
-    }
-
-    private void setUser(User user) {
-        this.user = user;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        System.out.println("kos");
     }
 }

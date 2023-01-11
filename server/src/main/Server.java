@@ -43,21 +43,7 @@ public class Server implements Runnable{
         this.serverSocket = serverSocket;
     }
 
-    public void sendMessage(String message) throws IOException {
-        OutputStream toUser = getServer().getOutputStream();
-        PrintWriter sender = new PrintWriter(toUser, true);
-        sender.println(message);
-    }
 
-    public String receiveMessage() throws IOException {
-
-        String message;
-        InputStream fromUser = getServer().getInputStream();
-        Scanner scanner = new Scanner(new DataInputStream(fromUser));
-        message = scanner.next();
-        System.out.println(message);
-        return message;
-    }
 
     private Socket getServer() {
         return server;
