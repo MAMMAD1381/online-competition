@@ -9,7 +9,7 @@ public class Quiz {
     public static void getQuestion(ArrayList<Question> list){
         JSONParser jsonParser = new JSONParser();
 
-        try (FileReader reader = new FileReader("src/Resources/questions.json"))
+        try (FileReader reader = new FileReader("Resources/questions.json"))
         {
             //Read JSON file
             Object obj = jsonParser.parse(reader);

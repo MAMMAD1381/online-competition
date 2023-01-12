@@ -21,6 +21,15 @@ public class User implements Runnable{
         catch (Exception e){
             System.out.println("ERROR: "+e.getMessage() +" "+ e.getCause());
         }
+        try {
+            sendMessage("user1");
+            sendMessage("chat");
+            sendMessage("user1");
+            sendMessage("message");
+            System.out.println("hgf");
+        } catch (IOException e) {
+
+        }
     }
 
     private int getPort() {
@@ -76,7 +85,6 @@ public class User implements Runnable{
 
         }
 
-        System.out.println("fuck");
 
     }
     public  void receiveMessage() throws IOException {

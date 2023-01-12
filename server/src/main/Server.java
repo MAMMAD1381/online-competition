@@ -3,6 +3,7 @@ package main;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Server implements Runnable{
@@ -10,6 +11,8 @@ public class Server implements Runnable{
     private ServerSocket serverSocket;
     private Socket server;
     public static int numberOfUsers=4;
+
+    private ArrayList<ClientHandler> users=new ArrayList<ClientHandler>();
 
     public Server(int port) throws IOException {
         setPort(port);
@@ -21,8 +24,10 @@ public class Server implements Runnable{
         }
         while (true){
             ready();
-            Thread t=new Thread(new ClientHandler(server));
-            t.start();
+            System.out.println("connected");
+            ClientHandler newUser=new ClientHandler(server ,this);
+            users.add(newUser);
+            newUser.start();
         }
 
     }
@@ -45,6 +50,18 @@ public class Server implements Runnable{
 
 
 
+    public void chat(String msg ,String receiver,ClientHandler sender) throws IOException {
+        for(ClientHandler user:users){
+            if(user.username.equals(receiver)) {
+                user.sendMessage("[" + sender.username + "]" + msg);
+                System.out.println("chat success");
+            }
+        }
+    }
+
+    public void getUsernames(ArrayList<String> names){
+
+    }
     private Socket getServer() {
         return server;
     }

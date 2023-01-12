@@ -5,11 +5,23 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ClientHandler implements Runnable{
+public class ClientHandler extends Thread{
     private Socket client;
+    private Server server;
+    public String username;
+    Scanner scanner;
     ArrayList<Question> question;
-    public ClientHandler(Socket socket){
+    public ClientHandler(Socket socket ,Server server){
         this.client = socket;
+        this.server=server;
+        InputStream fromUser = null;
+        try {
+            fromUser = client.getInputStream();
+            scanner = new Scanner(new DataInputStream(fromUser));
+            username=receiveMessage();
+        } catch (IOException e) {
+
+        }
         question=new ArrayList<>();
     }
     public void test(){
@@ -32,6 +44,21 @@ public class ClientHandler implements Runnable{
 
 
     }
+    public void chat(){
+        String msg;
+        System.out.println("chat");
+        String receiver=scanner.nextLine();
+        do {
+            msg=scanner.nextLine();
+
+            try {
+                server.chat(msg ,receiver ,this);
+            } catch (IOException e) {
+            }
+
+
+        }while (! msg.equals("finish"));
+    }
 
     public void sendMessage(String message) throws IOException {
         OutputStream toUser = client.getOutputStream();
@@ -42,16 +69,25 @@ public class ClientHandler implements Runnable{
     public String receiveMessage() throws IOException {
 
         String message;
-        InputStream fromUser = client.getInputStream();
-        Scanner scanner = new Scanner(new DataInputStream(fromUser));
-        message = scanner.next();
-        System.out.println(message);
+
+        message = scanner.nextLine();
+        if(message.equals("chat")) {
+            chat();
+        }
         return message;
     }
 
     @Override
     public void run() {
-        if(Server.numberOfUsers>=3)
-            test();
+        while (true){
+            if (Server.numberOfUsers >= 3) {
+                test();
+                Server.numberOfUsers = 0;
+            }
+            try {
+                receiveMessage();
+            } catch (IOException e) {
+            }
+        }
     }
 }
