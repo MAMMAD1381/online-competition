@@ -53,14 +53,17 @@ public class Server implements Runnable{
     public void chat(String msg ,String receiver,ClientHandler sender) throws IOException {
         for(ClientHandler user:users){
             if(user.username.equals(receiver)) {
-                user.sendMessage("[" + sender.username + "]" + msg);
+                user.sendMessage(msg);
+                System.out.println("msg:  "+msg);
                 System.out.println("chat success");
             }
         }
     }
 
     public void getUsernames(ArrayList<String> names){
-
+        for(ClientHandler user:users){
+            names.add(user.username);
+        }
     }
     private Socket getServer() {
         return server;

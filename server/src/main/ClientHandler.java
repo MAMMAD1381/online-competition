@@ -9,7 +9,8 @@ public class ClientHandler extends Thread{
     private Socket client;
     private Server server;
     public String username;
-    Scanner scanner;
+    private Scanner scanner;
+    private PrintWriter sender;
     ArrayList<Question> question;
     public ClientHandler(Socket socket ,Server server){
         this.client = socket;
@@ -18,6 +19,8 @@ public class ClientHandler extends Thread{
         try {
             fromUser = client.getInputStream();
             scanner = new Scanner(new DataInputStream(fromUser));
+            OutputStream toUser = client.getOutputStream();
+            sender = new PrintWriter(toUser, true);
             username=receiveMessage();
         } catch (IOException e) {
 
@@ -48,6 +51,12 @@ public class ClientHandler extends Thread{
         String msg;
         System.out.println("chat");
         String receiver=scanner.nextLine();
+        try {
+            server.chat("chat",receiver,this);
+            server.chat(username ,receiver,this);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         do {
             msg=scanner.nextLine();
 
@@ -61,16 +70,15 @@ public class ClientHandler extends Thread{
     }
 
     public void sendMessage(String message) throws IOException {
-        OutputStream toUser = client.getOutputStream();
-        PrintWriter sender = new PrintWriter(toUser, true);
+
         sender.println(message);
     }
 
     public String receiveMessage() throws IOException {
 
         String message;
-
         message = scanner.nextLine();
+        System.out.println("recieve:"+message);
         if(message.equals("chat")) {
             chat();
         }
