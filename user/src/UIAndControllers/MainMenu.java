@@ -28,7 +28,7 @@ public class MainMenu extends Parent {
         ListView listUser = new ListView();
         labelFriends.setText("friends:");
         labelServers.setText("servers:");
-        labelUser.setText("user:");
+        labelUser.setText("me");
 
 
         sectionFriends.setMaxWidth(CONSTANTS.WIDTH/3);
