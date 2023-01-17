@@ -1,10 +1,9 @@
 package main;
 
 import UIAndControllers.CONSTANTS;
-import javafx.fxml.FXMLLoader;
+import UIAndControllers.MainMenu;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -14,7 +13,8 @@ public class SceneController {
 
     public SceneController(Stage stage) throws IOException {
         this.stage = stage;
-        switchScene(FXMLLoader.load(getClass().getResource("/UiAndControllers/Fxmls/mainMenu.fxml")));
+//        switchScene(FXMLLoader.load(getClass().getResource("/UiAndControllers/Fxmls/mainMenu.fxml")));
+        switchScene(new MainMenu());
         stage.show();
     }
 
