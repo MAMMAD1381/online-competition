@@ -50,6 +50,8 @@ public class Server implements Runnable{
 
 
 
+
+    //function that looks for the receiver name and sending the message
     public void chat(String msg ,String receiver,ClientHandler sender) throws IOException {
         for(ClientHandler user:users){
             if(user.username.equals(receiver)) {

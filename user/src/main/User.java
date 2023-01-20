@@ -29,7 +29,6 @@ public class User implements Runnable{
         }
         try {
             sendMessage("user1");
-            sendPM("user1","hi");
         } catch (IOException e) {
 
         }
@@ -88,7 +87,9 @@ public class User implements Runnable{
     }
 
 
-    public void test(Scanner scanner) throws IOException {
+
+    // gets questions from server and stores it in data arraylist
+    public void test() throws IOException {
         int i=0;
         while (scanner.hasNext()){
             String question=scanner.nextLine();
@@ -102,10 +103,7 @@ public class User implements Runnable{
             option[2]=scanner.nextLine();
             option[3]=scanner.nextLine();
             long answer= Long.parseLong(scanner.nextLine());
-            getData().add(new Question(question,option,answer));
-
-
-            System.out.println(getData().get(i).question);
+            data.add(new Question(question,option,answer));
             i++;
 
         }
@@ -122,7 +120,7 @@ public class User implements Runnable{
         System.out.println("command:"+command);
         switch (command){
             case "test":
-                test(scanner);
+                test();
                 break;
             case "chat":
                 System.out.println("chattt");

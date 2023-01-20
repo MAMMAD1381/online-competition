@@ -9,6 +9,7 @@ public class ClientHandler extends Thread{
     private Socket client;
     private Server server;
     public String username;
+    public int score;
     private Scanner scanner;
     private PrintWriter sender;
     ArrayList<Question> question;
@@ -27,6 +28,9 @@ public class ClientHandler extends Thread{
         }
         question=new ArrayList<>();
     }
+
+
+    //function to send the questions to clients
     public void test(){
         Quiz.getQuestion(question);
         try {
@@ -47,6 +51,9 @@ public class ClientHandler extends Thread{
 
 
     }
+
+
+    //revives message from 1 user and sends it to another
     public void chat(){
         String msg;
         System.out.println("chat");
@@ -69,18 +76,27 @@ public class ClientHandler extends Thread{
         }while (! msg.equals("finish"));
     }
 
+
+
     public void sendMessage(String message) throws IOException {
 
         sender.println(message);
     }
 
+
+    //receiving data from client
     public String receiveMessage() throws IOException {
 
         String message;
         message = scanner.nextLine();
         System.out.println("recieve:"+message);
-        if(message.equals("chat")) {
-            chat();
+        switch (message){
+            case "chat":
+                chat();
+                break;
+            case "test":
+                test();
+                break;
         }
         return message;
     }
@@ -88,10 +104,6 @@ public class ClientHandler extends Thread{
     @Override
     public void run() {
         while (true){
-            if (Server.numberOfUsers >= 3) {
-                test();
-                Server.numberOfUsers = 0;
-            }
             try {
                 receiveMessage();
             } catch (IOException e) {

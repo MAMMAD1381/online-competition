@@ -6,6 +6,8 @@ import org.json.simple.*;
 import org.json.simple.parser.*;
 
 public class Quiz {
+
+    //function to read the json file
     public static void getQuestion(ArrayList<Question> list){
         JSONParser jsonParser = new JSONParser();
 
@@ -27,16 +29,10 @@ public class Quiz {
             e.printStackTrace();
         }
     }
-    public static void main(String[] args)
-    {
-        //JSON parser object to parse read file
-        ArrayList<Question> list=new ArrayList<>();
-        getQuestion(list);
-        for (int i=0;i< list.size();i++){
-            //System.out.println(list.get(i).answer);
-        }
-    }
 
+
+
+    //function to read 1 question at a time
     private static void parseQuestionObject(ArrayList<Question> list,JSONObject questionObject)
     {
         String[] option=new String[4];
@@ -52,6 +48,9 @@ public class Quiz {
 
     }
 }
+
+
+// a class for organizing the data from json file
 class Question{
     String question;
     String[] options=new String[4];

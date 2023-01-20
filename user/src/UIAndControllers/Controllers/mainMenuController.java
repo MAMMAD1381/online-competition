@@ -36,6 +36,7 @@ public class mainMenuController implements Initializable {
 
     }
 
+
     @FXML
     public void btnStart(ActionEvent e) throws IOException {
         SceneController.switchScene(FXMLLoader.load(getClass().getResource("../Fxmls/test.fxml")));
@@ -43,5 +44,7 @@ public class mainMenuController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        user = new User(port,serverAddress);
+        System.out.println("did");
     }
 }

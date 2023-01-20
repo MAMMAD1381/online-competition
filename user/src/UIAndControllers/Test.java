@@ -12,7 +12,9 @@ import javafx.scene.control.Separator;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import main.User;
 
+import java.io.IOException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -101,10 +103,19 @@ public class Test extends Parent {
     }
 
     private void startTest() {
+        mainMenuController.user=new User(9090,"127.0.0.1");// need to move this later
+        try {
+            mainMenuController.user.sendMessage("test");// receiving test question from server
+            mainMenuController.user.receiveMessage();
+
+            System.out.println(mainMenuController.user.getData().get(2).question);
+        } catch (IOException e) {
+        }
+
         final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
         while (testNumber< mainMenuController.user.getData().size()){
 
-            executorService.scheduleAtFixedRate(new Runnable() {
+            executorService.scheduleAtFixedRate(new Runnable() { // doesnt work properly
                 @Override
                 public void run() {
                     radioOption1.setText(mainMenuController.user.getData().get(testNumber).options[0]);
