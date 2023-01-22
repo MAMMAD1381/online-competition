@@ -1,6 +1,7 @@
 package UIAndControllers;
 
 import UIAndControllers.Controllers.mainMenuController;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -15,6 +16,9 @@ import javafx.scene.layout.VBox;
 import main.User;
 
 import java.io.IOException;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -29,12 +33,14 @@ public class Test extends Parent {
     private RadioButton radioOption2;
     private RadioButton radioOption3;
     private RadioButton radioOption4;
+    private Label question;
+    private Label questionNumber;
 
     public Test(){
 
         HBox sectionHeader = new HBox();
-        Label question = new Label("soal");
-        Label questionNumber = new Label("question number");
+        question = new Label("soal");
+        questionNumber = new Label("question number");
         questionNumber.setMinWidth(0.2*CONSTANTS.WIDTH);
         sectionHeader.getChildren().addAll(questionNumber,question);
         sectionHeader.setAlignment(Pos.CENTER);
@@ -112,20 +118,33 @@ public class Test extends Parent {
         } catch (IOException e) {
         }
 
-        final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-        while (testNumber< mainMenuController.user.getData().size()){
-
-            executorService.scheduleAtFixedRate(new Runnable() { // doesnt work properly
-                @Override
-                public void run() {
+        Timer t = new Timer();
+        TimerTask tt = new TimerTask() {
+            @Override
+            public void run() {
+                if (testNumber >= mainMenuController.user.getData().size()) {
+                    t.cancel();
+                    t.purge();
+                    return;
+                }
+                Platform.runLater(() -> {
+                    questionNumber.setText(testNumber+1+"");
+                    question.setText(mainMenuController.user.getData().get(testNumber).question);
                     radioOption1.setText(mainMenuController.user.getData().get(testNumber).options[0]);
                     radioOption2.setText(mainMenuController.user.getData().get(testNumber).options[1]);
                     radioOption3.setText(mainMenuController.user.getData().get(testNumber).options[2]);
                     radioOption4.setText(mainMenuController.user.getData().get(testNumber).options[3]);
-                }
-            }, 0, 1, TimeUnit.SECONDS);
-            testNumber++;
 
-        }
+                            testNumber++;
+                        }
+
+
+                );
+            };
+        };
+        t.schedule(tt, new Date(),2000);
+
+
+
     }
 }

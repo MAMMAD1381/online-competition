@@ -5,10 +5,11 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ClientHandler extends Thread{
+public class ClientHandler  extends Thread implements Comparable{
     private Socket client;
     private Server server;
     public String username;
+
     public int score;
     private Scanner scanner;
     private PrintWriter sender;
@@ -109,5 +110,13 @@ public class ClientHandler extends Thread{
             } catch (IOException e) {
             }
         }
+    }
+
+
+
+    @Override
+    public int compareTo(Object o) {
+        int compare=((ClientHandler) o).score;
+        return this.score-compare;
     }
 }

@@ -10,11 +10,15 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import main.SceneController;
 
+import java.util.ArrayList;
+
 public class MainMenu extends Parent {
 
     private double START_SECTION_WIDTH = 0.3;
     private double USERS_SECTION_WIDTH = 0.7;
 
+
+    private static ListView<String> listUser;
     private Button btnStart;
     public MainMenu(){
         HBox main = new HBox();
@@ -42,9 +46,9 @@ public class MainMenu extends Parent {
         sectionUsersBtn.getChildren().addAll(btnOnlineUsers,btnOfflineUsers,btnRefresh);
 
         HBox sectionUsersList = new HBox();
-        ListView<String> listServer = new ListView<>();
-        listServer.setMinWidth(USERS_SECTION_WIDTH * CONSTANTS.WIDTH);
-        sectionUsersList.getChildren().addAll(listServer);
+        listUser = new ListView<>();
+        listUser.setMinWidth(USERS_SECTION_WIDTH * CONSTANTS.WIDTH);
+        sectionUsersList.getChildren().addAll(listUser);
         sectionUsersList.setAlignment(Pos.TOP_CENTER);
 
         sectionUsers.setMinWidth(USERS_SECTION_WIDTH * CONSTANTS.WIDTH);
@@ -59,6 +63,13 @@ public class MainMenu extends Parent {
 
 
         listeners();
+//        updateUsers();
+    }
+
+    public static void updateUsers(ArrayList<String> users) {
+        for (String user:users) {
+            listUser.getItems().add(user);
+        }
     }
 
     private void listeners() {

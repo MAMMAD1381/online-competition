@@ -1,5 +1,7 @@
 package main;
 
+import UIAndControllers.MainMenu;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -27,6 +29,7 @@ public class Server implements Runnable{
             System.out.println("connected");
             ClientHandler newUser=new ClientHandler(server ,this);
             users.add(newUser);
+            MainMenu.updateUsers(getUsernames());
             newUser.start();
         }
 
@@ -62,10 +65,13 @@ public class Server implements Runnable{
         }
     }
 
-    public void getUsernames(ArrayList<String> names){
+    public ArrayList<String> getUsernames(){
+        ArrayList<String> names = new ArrayList<>();
         for(ClientHandler user:users){
             names.add(user.username);
+            System.out.println(user.username);
         }
+        return names;
     }
     private Socket getServer() {
         return server;
