@@ -28,7 +28,7 @@ public class ClientHandler  extends Thread implements Comparable<ClientHandler>{
             OutputStream toUser = client.getOutputStream();
             sender = new PrintWriter(toUser, true);
 
-            username=receiveMessage() +" "+counter;
+            username=scanner.nextLine() +" "+counter;
             counter++;//todo test usernames
 
 
@@ -61,15 +61,15 @@ public class ClientHandler  extends Thread implements Comparable<ClientHandler>{
     public void setScore(){
         for (int i=0;i< question.size();i++){
             try {
-                Thread.sleep(5000);
+                Thread.sleep(2000);
             } catch (InterruptedException e) {
             }
             sendMessage("answer");
             if(receiveMessage().equals(question.get(i).answer+""))
                 score++;
 
-            //Server.showScoreBoard();
-            // show scoreBoard
+            Server.showScoreBoard();
+//
 
         }
     }
@@ -79,22 +79,19 @@ public class ClientHandler  extends Thread implements Comparable<ClientHandler>{
     public void chat(){
         String msg;
         String receiver=scanner.nextLine();
-        try {
-            server.chat("chat",receiver,this);
-            server.chat(username ,receiver,this);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        do {
+
+        server.chat("chat",receiver,this);
+        server.chat(username ,receiver,this);
+        while (true){
             msg=scanner.nextLine();
+            if(msg.equals("finish"))
+                break;
+            server.chat(msg ,receiver ,this);
+        }
 
-            try {
-                server.chat(msg ,receiver ,this);
-            } catch (IOException e) {
-            }
 
 
-        }while (! msg.equals("finish"));
+
     }
 
 
@@ -115,13 +112,16 @@ public class ClientHandler  extends Thread implements Comparable<ClientHandler>{
 
         String message;
         message = scanner.nextLine();
-        System.out.println("receive:"+message);
+
         switch (message){
             case "chat":
                 chat();
                 break;
             case "test":
                 test();
+                break;
+            case "Friends":
+                Server.getFriends(this);
                 break;
 
         }

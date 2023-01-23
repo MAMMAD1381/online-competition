@@ -4,17 +4,19 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
 
-public class ScoreBoard extends Parent {
+public class ScoreBoard extends Stage {
     private TableView<Person> tableView;
     private double headerHeight = 0.1;
 
@@ -50,12 +52,15 @@ public class ScoreBoard extends Parent {
         sectionHeader.setAlignment(Pos.CENTER);
 
         main.getChildren().addAll(sectionHeader,sectionScoreBoard);
-        this.getChildren().add(main);
+        this.setScene(new Scene(main));
+
+
     }
 
     public static void setList(ArrayList<Person> personArrayList) {
         ScoreBoard.personArrayList = personArrayList;
     }
+
 
 
     public ObservableList<Person> getList(ArrayList<Person> users){

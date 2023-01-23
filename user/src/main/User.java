@@ -1,14 +1,18 @@
 package main;
 
+import UIAndControllers.MainMenu;
 import UIAndControllers.Person;
 import UIAndControllers.ScoreBoard;
+import javafx.animation.PauseTransition;
+import javafx.application.Platform;
+import javafx.util.Duration;
 
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class User implements Runnable{
+public class User extends Thread{
     private int port;
     private String serverAddress;
     private Socket user;
@@ -16,6 +20,7 @@ public class User implements Runnable{
     private Scanner scanner;
     private ArrayList<Question> data;
     ArrayList<String> friends;
+    private ScoreBoard scoreBoard;
 
     public User(int port, String serverAddress){
         setPort(port);
@@ -67,13 +72,18 @@ public class User implements Runnable{
 
     public void receivePM(){
         String sender=scanner.nextLine();
-        System.out.println("pm");
         String msg="";
-
-        while (! msg.equals("finish")){
+        System.out.println("pm");
+        while (true){
             msg=scanner.nextLine();
+            MainMenu.updateChat(sender,msg);
+            System.out.println("pm:"+msg);
+            if (msg.equals("finish"))
+                break;
             System.out.println(sender+": "+msg);
         }
+
+        MainMenu.updateChat(sender,msg);
     }
 
     public void sendMessage(String message) {
@@ -90,7 +100,7 @@ public class User implements Runnable{
         while (scanner.hasNext()){
             String question=scanner.nextLine();
             if(question.equals("finish")) {
-                System.out.println("finish");
+
                 break;
             }
             String[] option=new String[4];
@@ -111,21 +121,27 @@ public class User implements Runnable{
     public  String receiveMessage() {
 
         String command = null;
-
-
-
         command=scanner.nextLine();
-        System.out.println("command:"+command);
         switch (command){
             case "test":
                 test();
                 break;
             case "chat":
-                System.out.println("chattt");
                 receivePM();
                 break;
             case "scoreBoard":
                 scoreBoard();
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        scoreBoard = new ScoreBoard();
+                        scoreBoard.show();
+                        PauseTransition delay = new PauseTransition(Duration.seconds(1));
+                        delay.setOnFinished( event -> scoreBoard.close() );
+                        delay.play();
+                    }
+                });
+
                 break;
             case "Friends":
                 getFriendList();
@@ -137,9 +153,12 @@ public class User implements Runnable{
     }
 
     private void getFriendList() {
-        String msg=null;
-        while (!msg.equals("finish")){
+        String msg="";
+        friends=new ArrayList<>();
+        while (true){
             msg=scanner.nextLine();
+            if(msg.equals("finish"))
+                break;
             friends.add(msg);
         }
     }
@@ -147,19 +166,22 @@ public class User implements Runnable{
     private void scoreBoard() {
         ArrayList<Person> list=new ArrayList<>();
         String name="";
+        int i=0;
         while (true){
+
+            name=scanner.nextLine();
             if (name.equals("finishBoard")) {
                 ScoreBoard.setList(list);
-                System.out.println("finish "+name);
-                break;
+                return;
             }
-            name=scanner.nextLine();
             Integer score=Integer.parseInt(scanner.nextLine());
             list.add(new Person(name,score));
-            System.out.println("list:"+name+"  score:"+score);
+
+
 
 
         }
+
 
     }
 
@@ -171,11 +193,21 @@ public class User implements Runnable{
         this.data = data;
     }
 
+    public ArrayList<String> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(ArrayList<String> friends) {
+        this.friends = friends;
+    }
+
     @Override
     public void run() {
 
         while (true){
-            receiveMessage();
+            if(scanner.hasNext())
+                receiveMessage();
+
 
         }
     }

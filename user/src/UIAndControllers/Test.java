@@ -1,15 +1,15 @@
 package UIAndControllers;
 
 import UIAndControllers.Controllers.mainMenuController;
+import com.sun.tools.javac.Main;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.Separator;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -50,6 +50,7 @@ public class Test extends Parent {
         HBox sectionQuestion1 = new HBox();
         Label option1 = new Label("1");
         radioOption1 = new RadioButton("option 1");
+        radioOption1.setSelected(true);
         sectionQuestion1.getChildren().addAll(radioOption1,option1);
         sectionQuestion1.setAlignment(Pos.TOP_RIGHT);
         sectionQuestion1.setSpacing(30);
@@ -107,7 +108,43 @@ public class Test extends Parent {
         main.setAlignment(Pos.CENTER);
         this.getChildren().add(main);
 
+        listeners();
         startTest();
+    }
+
+    private void listeners() {
+        radioOption1.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                radioOption2.setSelected(false);
+                radioOption3.setSelected(false);
+                radioOption4.setSelected(false);
+            }
+        });
+        radioOption2.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                radioOption1.setSelected(false);
+                radioOption3.setSelected(false);
+                radioOption4.setSelected(false);
+            }
+        });
+        radioOption3.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                radioOption2.setSelected(false);
+                radioOption1.setSelected(false);
+                radioOption4.setSelected(false);
+            }
+        });
+        radioOption4.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                radioOption2.setSelected(false);
+                radioOption3.setSelected(false);
+                radioOption1.setSelected(false);
+            }
+        });
     }
 
     private void startTest() {
@@ -131,18 +168,32 @@ public class Test extends Parent {
                     radioOption2.setText(MainMenu.user.getData().get(testNumber).options[1]);
                     radioOption3.setText(MainMenu.user.getData().get(testNumber).options[2]);
                     radioOption4.setText(MainMenu.user.getData().get(testNumber).options[3]);
-
                             testNumber++;
-                        }
+                }
 
 
                 );
                 while (!MainMenu.user.receiveMessage().equals("answer")){
 
                 }
-                MainMenu.user.sendMessage("3");
-//                MainMenu.user.receiveMessage();
-//                SceneController.switchScene(new ScoreBoard());
+                String selectedOption = "0";
+                while (selectedOption.equals("0")) {
+                    if (radioOption1.isSelected())
+                        selectedOption = "1";
+                    else if (radioOption2.isSelected())
+                        selectedOption = "2";
+                    else if (radioOption3.isSelected())
+                        selectedOption = "3";
+                    else if (radioOption4.isSelected())
+                        selectedOption = "4";
+//                    else{
+//                        Alert alert = new Alert(Alert.AlertType.ERROR,"pls select an option",ButtonType.OK);
+//                        alert.show();
+//                    }
+                }
+                MainMenu.user.sendMessage(selectedOption);
+                MainMenu.user.receiveMessage();
+                //SceneController.switchScene(new ScoreBoard());
 
             };
         };

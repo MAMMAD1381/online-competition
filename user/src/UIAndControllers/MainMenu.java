@@ -1,5 +1,6 @@
 package UIAndControllers;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -15,10 +16,14 @@ import javafx.scene.layout.VBox;
 import main.SceneController;
 import main.User;
 
+import java.util.ArrayList;
+
 public class MainMenu extends Parent {
     public static User user;
-    private TextArea chats;
+    private static TextArea chats;
     private TextArea currentChat;
+    private ListView listUser;
+    private ListView listFriends;
 
     public MainMenu(){
         user=new User(9090,"127.0.0.1");
@@ -31,15 +36,16 @@ public class MainMenu extends Parent {
         Label labelFriends = new Label();
         Label labelChat = new Label();
         Label labelUser = new Label();
-        ListView listFriends = new ListView();
+        listFriends = new ListView();
         chats = new TextArea();
         chats.setEditable(false);
         currentChat = new TextArea();
         Button btnSend = new Button("send");
-        ListView listUser = new ListView();
+        listUser = new ListView();
         labelFriends.setText("friends:");
         labelChat.setText("chat:");
         labelUser.setText("me");
+        Button buttonRefresh = new Button("refresh");
 
 
         sectionFriends.setMaxWidth(CONSTANTS.WIDTH/3);
@@ -64,7 +70,7 @@ public class MainMenu extends Parent {
         sectionFriends.setPadding(new Insets(5));
         sectionChat.setPadding(new Insets(5));
         sectionUser.setPadding(new Insets(5));
-        sectionFriends.getChildren().addAll(labelFriends,listFriends);
+        sectionFriends.getChildren().addAll(labelFriends,listFriends,buttonRefresh);
         sectionChat.getChildren().addAll(labelChat,currentChat,chats,btnSend);
         sectionUser.getChildren().addAll(labelUser,listUser,buttonStart);
 
@@ -76,7 +82,7 @@ public class MainMenu extends Parent {
 
         this.getChildren().add(anchorPane);
 
-        listeners(buttonStart,btnSend);
+        listeners(buttonStart,btnSend,buttonRefresh);
 
     }
 
@@ -84,19 +90,39 @@ public class MainMenu extends Parent {
 
     }
 
-    private void listeners(Button buttonStart, Button btnSend){
+    private void listeners(Button buttonStart, Button buttonSend ,Button buttonRefresh){
         buttonStart.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+
                 SceneController.switchScene(new Test());
+                //user.receiveMessage();
             }
         });
 
-        btnSend.setOnAction(new EventHandler<ActionEvent>() {
+        buttonSend.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                user.sendPM(listFriends.getSelectionModel().getSelectedItems().get(0).toString(),currentChat.getText());
                 chats.setText(chats.getText() + "you:\n" + currentChat.getText() + "\n");
             }
         });
+
+        buttonRefresh.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                user.sendMessage("Friends");
+                user.receiveMessage();
+                listFriends.getItems().clear();
+                for (String friendName:user.getFriends()) {
+
+                    listFriends.getItems().add(friendName);
+                }
+            }
+        });
+    }
+
+    public static void updateChat(String username ,String msg){
+        chats.setText(username+":\t" + msg);
     }
 }

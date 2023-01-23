@@ -59,12 +59,11 @@ public class Server implements Runnable{
 
 
     //function that looks for the receiver name and sending the message
-    public void chat(String msg ,String receiver,ClientHandler sender) throws IOException {
+    public void chat(String msg ,String receiver,ClientHandler sender) {
         for(ClientHandler user:users){
             if(user.username.equals(receiver)) {
                 user.sendMessage(msg);
                 System.out.println("msg:  "+msg);
-                System.out.println("chat success");
             }
         }
     }
