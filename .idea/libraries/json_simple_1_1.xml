@@ -2,8 +2,11 @@
   <library name="json-simple-1.1">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/../../../../../json-simple-1.1.jar/json-simple-1.1.jar!/" />
+      <root url="file://$PATH_TO_FX$" />
+      <root url="jar://$PROJECT_DIR$/../../../../../ja-netfilter/json-simple-1.1.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
+    <jarDirectory url="file://$PATH_TO_FX$" recursive="false" />
   </library>
 </component>

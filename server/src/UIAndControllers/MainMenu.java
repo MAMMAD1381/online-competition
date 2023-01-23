@@ -69,7 +69,9 @@ public class MainMenu extends Parent {
     }
 
     public static void updateUsers(ArrayList<String> users) {
+        listUser.getItems().clear();
         for (String user:users) {
+
             listUser.getItems().add(user);
         }
     }

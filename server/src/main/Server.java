@@ -1,6 +1,8 @@
 package main;
 
 import UIAndControllers.MainMenu;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -29,6 +31,7 @@ public class Server implements Runnable{
             ready();
             System.out.println("connected");
             ClientHandler newUser=new ClientHandler(server ,this);
+            newUser.setOnline(true);
             users.add(newUser);
             MainMenu.updateUsers(getUsernames());
             newUser.start();
@@ -69,13 +72,30 @@ public class Server implements Runnable{
     public ArrayList<String> getUsernames(){
         ArrayList<String> names = new ArrayList<>();
         for(ClientHandler user:users){
-            names.add(user.username);
+            if(user.isOnline()) {
+                Text onlineText = new Text("online");
+                onlineText.setFill(Color.GREEN);
+                names.add(user.username + "\t\t\t\t\t\t" + onlineText.getText());
+            }
+            else {
+                Text offlineText = new Text("offline");
+                offlineText.setFill(Color.RED);
+                names.add(user.username + "\t\t\t\t\t\t" + offlineText.getText());
+            }
             System.out.println(user.username);
         }
         return names;
     }
     private Socket getServer() {
         return server;
+    }
+
+    public static void getFriends(ClientHandler client){
+        client.sendMessage("Friends");
+        for (ClientHandler user:users) {
+            client.sendMessage(user.username);
+        }
+        client.sendMessage("finish");
     }
 
     private void setServer(Socket server) {
@@ -97,10 +117,11 @@ public class Server implements Runnable{
         for(ClientHandler user:users){
             user.sendMessage("scoreBoard");
             for (ClientHandler u:users) {
-                user.sendMessage(u.getName());
+                user.sendMessage(u.username);
                 user.sendMessage(u.getScore()+"");
+                System.out.println("scoreBoard"+u.score+"\n"+u.username);
             }
-            user.sendMessage("finish");
+            user.sendMessage("finishBoard");
         }
     }
 

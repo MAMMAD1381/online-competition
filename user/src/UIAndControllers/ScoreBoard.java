@@ -18,13 +18,10 @@ public class ScoreBoard extends Parent {
     private TableView<Person> tableView;
     private double headerHeight = 0.1;
 
+    static ArrayList<Person> personArrayList;
+
     public ScoreBoard(){
-        //fake list
-        ArrayList<Person> personArrayList = new ArrayList<>();
-        personArrayList.add(new Person("aha1",22));
-        personArrayList.add(new Person("aha2",22));
-        personArrayList.add(new Person("aha3",22));
-        personArrayList.add(new Person("aha4",22));
+
 
         VBox main = new VBox();
         main.setMinHeight(CONSTANTS.HEIGHT);
@@ -55,6 +52,11 @@ public class ScoreBoard extends Parent {
         main.getChildren().addAll(sectionHeader,sectionScoreBoard);
         this.getChildren().add(main);
     }
+
+    public static void setList(ArrayList<Person> personArrayList) {
+        ScoreBoard.personArrayList = personArrayList;
+    }
+
 
     public ObservableList<Person> getList(ArrayList<Person> users){
         ObservableList<Person> list= FXCollections.observableArrayList();

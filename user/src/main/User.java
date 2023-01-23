@@ -1,5 +1,8 @@
 package main;
 
+import UIAndControllers.Person;
+import UIAndControllers.ScoreBoard;
+
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -12,6 +15,7 @@ public class User implements Runnable{
     private PrintWriter sender;
     private Scanner scanner;
     private ArrayList<Question> data;
+    ArrayList<String> friends;
 
     public User(int port, String serverAddress){
         setPort(port);
@@ -27,11 +31,7 @@ public class User implements Runnable{
         catch (Exception e){
             System.out.println("ERROR: "+e.getMessage() +" "+ e.getCause());
         }
-        try {
-            sendMessage("user1");
-        } catch (IOException e) {
-
-        }
+        sendMessage("user");
     }
 
     private int getPort() {
@@ -59,14 +59,10 @@ public class User implements Runnable{
     }
 
     public void sendPM(String username ,String msg){
-        try {
-            sendMessage("chat");
-            sendMessage(username);
-            sendMessage(msg);
-            sendMessage("finish");
-        } catch (IOException e) {
-
-        }
+        sendMessage("chat");
+        sendMessage(username);
+        sendMessage(msg);
+        sendMessage("finish");
     }
 
     public void receivePM(){
@@ -80,7 +76,7 @@ public class User implements Runnable{
         }
     }
 
-    public void sendMessage(String message) throws IOException {
+    public void sendMessage(String message) {
 
 
         sender.println(message);
@@ -89,7 +85,7 @@ public class User implements Runnable{
 
 
     // gets questions from server and stores it in data arraylist
-    public void test() throws IOException {
+    public void test() {
         int i=0;
         while (scanner.hasNext()){
             String question=scanner.nextLine();
@@ -112,7 +108,7 @@ public class User implements Runnable{
 
 
     }
-    public  String receiveMessage() throws IOException {
+    public  String receiveMessage() {
 
         String command = null;
 
@@ -131,6 +127,8 @@ public class User implements Runnable{
             case "scoreBoard":
                 scoreBoard();
                 break;
+            case "Friends":
+                getFriendList();
             default:
                 return command;
 
@@ -138,7 +136,30 @@ public class User implements Runnable{
         return command;
     }
 
+    private void getFriendList() {
+        String msg=null;
+        while (!msg.equals("finish")){
+            msg=scanner.nextLine();
+            friends.add(msg);
+        }
+    }
+
     private void scoreBoard() {
+        ArrayList<Person> list=new ArrayList<>();
+        String name="";
+        while (true){
+            if (name.equals("finishBoard")) {
+                ScoreBoard.setList(list);
+                System.out.println("finish "+name);
+                break;
+            }
+            name=scanner.nextLine();
+            Integer score=Integer.parseInt(scanner.nextLine());
+            list.add(new Person(name,score));
+            System.out.println("list:"+name+"  score:"+score);
+
+
+        }
 
     }
 
@@ -153,11 +174,9 @@ public class User implements Runnable{
     @Override
     public void run() {
 
-            try {
-                receiveMessage();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+        while (true){
+            receiveMessage();
 
+        }
     }
 }

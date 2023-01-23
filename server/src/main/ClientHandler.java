@@ -1,5 +1,7 @@
 package main;
 
+import UIAndControllers.MainMenu;
+
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -10,9 +12,12 @@ public class ClientHandler  extends Thread implements Comparable<ClientHandler>{
     private Server server;
     public String username;
     public int score;
+
+    public static int counter = 0;//todo delete this shit
     private Scanner scanner;
     private PrintWriter sender;
     ArrayList<Question> question;
+    private boolean isOnline;
     public ClientHandler(Socket socket ,Server server){
         this.client = socket;
         this.server=server;
@@ -22,8 +27,12 @@ public class ClientHandler  extends Thread implements Comparable<ClientHandler>{
             scanner = new Scanner(new DataInputStream(fromUser));
             OutputStream toUser = client.getOutputStream();
             sender = new PrintWriter(toUser, true);
-            username=receiveMessage();
-            score=Server.numberOfUsers;
+
+            username=receiveMessage() +" "+counter;
+            counter++;//todo test usernames
+
+
+            score=0;
         } catch (IOException e) {
 
         }
@@ -52,12 +61,15 @@ public class ClientHandler  extends Thread implements Comparable<ClientHandler>{
     public void setScore(){
         for (int i=0;i< question.size();i++){
             try {
-                Thread.sleep(10000);
+                Thread.sleep(5000);
             } catch (InterruptedException e) {
             }
             sendMessage("answer");
             if(receiveMessage().equals(question.get(i).answer+""))
                 score++;
+
+            //Server.showScoreBoard();
+            // show scoreBoard
 
         }
     }
@@ -66,7 +78,6 @@ public class ClientHandler  extends Thread implements Comparable<ClientHandler>{
     //revives message from 1 user and sends it to another
     public void chat(){
         String msg;
-        System.out.println("chat");
         String receiver=scanner.nextLine();
         try {
             server.chat("chat",receiver,this);
@@ -94,7 +105,7 @@ public class ClientHandler  extends Thread implements Comparable<ClientHandler>{
 
         }
         catch (Exception e){
-            System.out.println("kos nnt");
+
         }
     }
 
@@ -112,6 +123,7 @@ public class ClientHandler  extends Thread implements Comparable<ClientHandler>{
             case "test":
                 test();
                 break;
+
         }
         return message;
     }
@@ -119,13 +131,28 @@ public class ClientHandler  extends Thread implements Comparable<ClientHandler>{
 
     @Override
     public void run() {
-        while (true){
-            receiveMessage();
+        try {
+            while (true){
+                receiveMessage();
+            }
+        }catch (java.util.NoSuchElementException e){
+            setOnline(false);
+            System.out.println("user disconnected");
+            MainMenu.updateUsers(server.getUsernames()); //todo resending the users after offlining them
         }
+
     }
 
     public int getScore() {
         return score;
+    }
+
+    public boolean isOnline() {
+        return isOnline;
+    }
+
+    public void setOnline(boolean online) {
+        isOnline = online;
     }
 
     @Override

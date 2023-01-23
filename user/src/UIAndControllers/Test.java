@@ -13,6 +13,7 @@ import javafx.scene.control.Separator;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import main.SceneController;
 import main.User;
 
 import java.io.IOException;
@@ -111,12 +112,8 @@ public class Test extends Parent {
 
     private void startTest() {
 
-        try {
-            MainMenu.user.sendMessage("test");// receiving test question from server
-            MainMenu.user.receiveMessage();
-
-        } catch (IOException e) {
-        }
+        MainMenu.user.sendMessage("test");// receiving test question from server
+        MainMenu.user.receiveMessage();
 
         Timer t = new Timer();
         TimerTask tt = new TimerTask() {
@@ -140,18 +137,16 @@ public class Test extends Parent {
 
 
                 );
-                try {
-                    while (!MainMenu.user.receiveMessage().equals("answer")){
-
-                    }
-                    MainMenu.user.sendMessage("3");
-                } catch (IOException e) {
+                while (!MainMenu.user.receiveMessage().equals("answer")){
 
                 }
+                MainMenu.user.sendMessage("3");
+//                MainMenu.user.receiveMessage();
+//                SceneController.switchScene(new ScoreBoard());
 
             };
         };
-        t.schedule(tt, new Date(),1000);
+        t.schedule(tt, new Date(),3000);
 
 
 
