@@ -102,15 +102,17 @@ public class User implements Runnable{
             option[1]=scanner.nextLine();
             option[2]=scanner.nextLine();
             option[3]=scanner.nextLine();
-            long answer= Long.parseLong(scanner.nextLine());
-            data.add(new Question(question,option,answer));
+
+
+
+            data.add(new Question(question,option,0));
             i++;
 
         }
 
 
     }
-    public  void receiveMessage() throws IOException {
+    public  String receiveMessage() throws IOException {
 
         String command = null;
 
@@ -126,7 +128,18 @@ public class User implements Runnable{
                 System.out.println("chattt");
                 receivePM();
                 break;
+            case "scoreBoard":
+                scoreBoard();
+                break;
+            default:
+                return command;
+
         }
+        return command;
+    }
+
+    private void scoreBoard() {
+
     }
 
     public ArrayList<Question> getData() {

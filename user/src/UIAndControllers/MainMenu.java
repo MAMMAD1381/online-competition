@@ -12,9 +12,14 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import main.SceneController;
+import main.User;
 
 public class MainMenu extends Parent {
+    public static User user;
+
     public MainMenu(){
+        user=new User(9090,"127.0.0.1");
+
         AnchorPane anchorPane = new AnchorPane();
         VBox sectionFriends = new VBox();
         VBox sectionServers = new VBox();

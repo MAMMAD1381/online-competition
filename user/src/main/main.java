@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 public class main extends Application {
+    public static User user;
     public static void main(String[] args) {
 
         Application.launch();

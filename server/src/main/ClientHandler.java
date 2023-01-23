@@ -5,11 +5,10 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ClientHandler  extends Thread implements Comparable{
+public class ClientHandler  extends Thread implements Comparable<ClientHandler>{
     private Socket client;
     private Server server;
     public String username;
-
     public int score;
     private Scanner scanner;
     private PrintWriter sender;
@@ -24,6 +23,7 @@ public class ClientHandler  extends Thread implements Comparable{
             OutputStream toUser = client.getOutputStream();
             sender = new PrintWriter(toUser, true);
             username=receiveMessage();
+            score=Server.numberOfUsers;
         } catch (IOException e) {
 
         }
@@ -34,23 +34,32 @@ public class ClientHandler  extends Thread implements Comparable{
     //function to send the questions to clients
     public void test(){
         Quiz.getQuestion(question);
-        try {
-            sendMessage("test");
-            for (int i=0;i< question.size();i++){
-                sendMessage(question.get(i).question);
-                sendMessage(question.get(i).options[0]);
-                sendMessage(question.get(i).options[1]);
-                sendMessage(question.get(i).options[2]);
-                sendMessage(question.get(i).options[3]);
-                sendMessage(Long.toString(question.get(i).answer));
+        sendMessage("test");
+        for (int i=0;i< question.size();i++){
+            sendMessage(question.get(i).question);
+            sendMessage(question.get(i).options[0]);
+            sendMessage(question.get(i).options[1]);
+            sendMessage(question.get(i).options[2]);
+            sendMessage(question.get(i).options[3]);
 
-            }
-            sendMessage("finish");
-
-        } catch (IOException e) {
         }
+        sendMessage("finish");
+        setScore();
+
+    }
 
 
+    public void setScore(){
+        for (int i=0;i< question.size();i++){
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+            }
+            sendMessage("answer");
+            if(receiveMessage().equals(question.get(i).answer+""))
+                score++;
+
+        }
     }
 
 
@@ -79,18 +88,23 @@ public class ClientHandler  extends Thread implements Comparable{
 
 
 
-    public void sendMessage(String message) throws IOException {
+    public void sendMessage(String message){
+        try {
+            sender.println(message);
 
-        sender.println(message);
+        }
+        catch (Exception e){
+            System.out.println("kos nnt");
+        }
     }
 
 
     //receiving data from client
-    public String receiveMessage() throws IOException {
+    public String receiveMessage(){
 
         String message;
         message = scanner.nextLine();
-        System.out.println("recieve:"+message);
+        System.out.println("receive:"+message);
         switch (message){
             case "chat":
                 chat();
@@ -102,21 +116,21 @@ public class ClientHandler  extends Thread implements Comparable{
         return message;
     }
 
+
     @Override
     public void run() {
         while (true){
-            try {
-                receiveMessage();
-            } catch (IOException e) {
-            }
+            receiveMessage();
         }
     }
 
-
+    public int getScore() {
+        return score;
+    }
 
     @Override
-    public int compareTo(Object o) {
-        int compare=((ClientHandler) o).score;
-        return this.score-compare;
+    public int compareTo(ClientHandler clientHandler) {
+        int compare=(clientHandler.score);
+        return compare-this.score;
     }
 }

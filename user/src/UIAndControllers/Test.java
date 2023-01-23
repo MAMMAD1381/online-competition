@@ -42,8 +42,9 @@ public class Test extends Parent {
         question = new Label("soal");
         questionNumber = new Label("question number");
         questionNumber.setMinWidth(0.2*CONSTANTS.WIDTH);
-        sectionHeader.getChildren().addAll(questionNumber,question);
-        sectionHeader.setAlignment(Pos.CENTER);
+        sectionHeader.getChildren().addAll(question,questionNumber);
+        sectionHeader.setAlignment(Pos.CENTER_RIGHT);
+        sectionHeader.setSpacing(10);
 
         HBox sectionQuestion1 = new HBox();
         Label option1 = new Label("1");
@@ -109,12 +110,11 @@ public class Test extends Parent {
     }
 
     private void startTest() {
-        mainMenuController.user=new User(9090,"127.0.0.1");// need to move this later
-        try {
-            mainMenuController.user.sendMessage("test");// receiving test question from server
-            mainMenuController.user.receiveMessage();
 
-            System.out.println(mainMenuController.user.getData().get(2).question);
+        try {
+            MainMenu.user.sendMessage("test");// receiving test question from server
+            MainMenu.user.receiveMessage();
+
         } catch (IOException e) {
         }
 
@@ -122,27 +122,36 @@ public class Test extends Parent {
         TimerTask tt = new TimerTask() {
             @Override
             public void run() {
-                if (testNumber >= mainMenuController.user.getData().size()) {
+                if (testNumber >= MainMenu.user.getData().size()) {
                     t.cancel();
                     t.purge();
                     return;
                 }
                 Platform.runLater(() -> {
-                    questionNumber.setText(testNumber+1+"");
-                    question.setText(mainMenuController.user.getData().get(testNumber).question);
-                    radioOption1.setText(mainMenuController.user.getData().get(testNumber).options[0]);
-                    radioOption2.setText(mainMenuController.user.getData().get(testNumber).options[1]);
-                    radioOption3.setText(mainMenuController.user.getData().get(testNumber).options[2]);
-                    radioOption4.setText(mainMenuController.user.getData().get(testNumber).options[3]);
+                    questionNumber.setText("."+(testNumber+1));
+                    question.setText(MainMenu.user.getData().get(testNumber).question);
+                    radioOption1.setText(MainMenu.user.getData().get(testNumber).options[0]);
+                    radioOption2.setText(MainMenu.user.getData().get(testNumber).options[1]);
+                    radioOption3.setText(MainMenu.user.getData().get(testNumber).options[2]);
+                    radioOption4.setText(MainMenu.user.getData().get(testNumber).options[3]);
 
                             testNumber++;
                         }
 
 
                 );
+                try {
+                    while (!MainMenu.user.receiveMessage().equals("answer")){
+
+                    }
+                    MainMenu.user.sendMessage("3");
+                } catch (IOException e) {
+
+                }
+
             };
         };
-        t.schedule(tt, new Date(),2000);
+        t.schedule(tt, new Date(),1000);
 
 
 

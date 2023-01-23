@@ -9,7 +9,9 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import main.SceneController;
+import main.Server;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MainMenu extends Parent {
@@ -76,6 +78,8 @@ public class MainMenu extends Parent {
         btnStart.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+
+                Server.showScoreBoard();
                 SceneController.switchScene(new Observation());
             }
         });

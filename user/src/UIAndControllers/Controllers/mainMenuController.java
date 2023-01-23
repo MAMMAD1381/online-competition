@@ -14,7 +14,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class mainMenuController implements Initializable {
-    public static User user;
+//    public static User user;
     private int port = 9090;
     private String serverAddress = "127.0.0.1";
     private String[] data = {"dsdsds","amir ","mmd"};
@@ -24,11 +24,11 @@ public class mainMenuController implements Initializable {
     AnchorPane anchorPane;
 
     public mainMenuController() throws IOException {
-        user = new User(port,serverAddress);
-        Thread client=new Thread(user);
-        client.start();
-        System.out.println("start");
-        checkSevers();
+//        user = new User(port,serverAddress);
+//        Thread client=new Thread(user);
+//        client.start();
+//        System.out.println("start");
+//        checkSevers();
 //        anchorPane.getChildren().add(serverList);
     }
 
@@ -44,7 +44,7 @@ public class mainMenuController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        user = new User(port,serverAddress);
+//        user = new User(port,serverAddress);
         System.out.println("did");
     }
 }

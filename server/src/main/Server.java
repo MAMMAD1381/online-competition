@@ -6,6 +6,8 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Server implements Runnable{
@@ -13,8 +15,7 @@ public class Server implements Runnable{
     private ServerSocket serverSocket;
     private Socket server;
     public static int numberOfUsers=4;
-
-    private ArrayList<ClientHandler> users=new ArrayList<ClientHandler>();
+    private static ArrayList<ClientHandler> users=new ArrayList<ClientHandler>();
 
     public Server(int port) throws IOException {
         setPort(port);
@@ -89,6 +90,18 @@ public class Server implements Runnable{
 
     public void close() throws IOException {
         getServerSocket().close();
+    }
+
+    public static void showScoreBoard(){
+        Collections.sort(users);
+        for(ClientHandler user:users){
+            user.sendMessage("scoreBoard");
+            for (ClientHandler u:users) {
+                user.sendMessage(u.getName());
+                user.sendMessage(u.getScore()+"");
+            }
+            user.sendMessage("finish");
+        }
     }
 
     @Override
