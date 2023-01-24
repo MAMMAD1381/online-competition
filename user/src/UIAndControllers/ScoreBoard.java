@@ -3,7 +3,6 @@ package UIAndControllers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -12,6 +11,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import main.Person;
 
 import java.util.ArrayList;
 
@@ -67,7 +67,7 @@ public class ScoreBoard extends Stage {
         ObservableList<Person> list= FXCollections.observableArrayList();
 
         for (Person person:users) {
-            list.add(new Person(person.name,person.score));
+            list.add(new Person(person.getName(),person.getScore()));
         }
         return list;
     }

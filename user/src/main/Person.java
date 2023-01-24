@@ -1,8 +1,8 @@
-package UIAndControllers;
+package main;
 
 public class Person {
-    String name;
-    Integer score;
+    private String name;
+    private Integer score;
     public Person(){
         this.name="";
         this.score=0;

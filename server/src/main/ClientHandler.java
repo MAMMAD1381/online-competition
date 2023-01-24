@@ -138,7 +138,9 @@ public class ClientHandler  extends Thread implements Comparable<ClientHandler>{
         }catch (java.util.NoSuchElementException e){
             setOnline(false);
             System.out.println("user disconnected");
-            MainMenu.updateUsers(server.getUsernames()); //todo resending the users after offlining them
+//            if(!server.getUsernames().isEmpty()) {
+                MainMenu.updateUsers(server.getUsernames()); //todo resending the users after offlining them
+//            }
         }
 
     }

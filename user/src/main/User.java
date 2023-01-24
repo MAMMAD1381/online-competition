@@ -1,7 +1,6 @@
 package main;
 
 import UIAndControllers.MainMenu;
-import UIAndControllers.Person;
 import UIAndControllers.ScoreBoard;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
